@@ -1,0 +1,24 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "EasyCombatText",
+	"Description": "Creates an easy manage combat text system",
+	"Category": "Other",
+	"CreatedBy": "Reetro_69",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "EasyCombatText",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}
