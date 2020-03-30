@@ -28,7 +28,13 @@ public:
   float GetTextUpTime();
   /* Set the text to display and it's up time */
   UFUNCTION(BlueprintCallable, Category = "Combat Text Functions")
-  void ConstructText(FText TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, FName Socket, float PlayRate);
+  void ConstructTextWithSocketOnStaticMesh(FText TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, FName Socket, class UStaticMeshComponent* Mesh, float PlayRate);
+  /* Set the text to display and it's up time */
+  UFUNCTION(BlueprintCallable, Category = "Combat Text Functions")
+  void ConstructTextWithSocketOnSkeletalMesh(FText TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, FName Socket, class USkeletalMeshComponent* Mesh, float PlayRate);
+  /* Set the text to display and it's up time */
+  UFUNCTION(BlueprintCallable, Category = "Combat Text Functions")
+  void ConstructTextWithOutSocket(FText TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, float PlayRate);
   /* Will start moving text to end point */
   UFUNCTION(BlueprintCallable, Category = "Combat Text Functions")
   void StartTextAnimation();
@@ -52,6 +58,10 @@ public:
   UFUNCTION(BlueprintPure, Category = "Combat Text Functions")
   class UCombatTextWidget* GetCurrentWidgetObject();
 
+  /* Returns the starting position */
+  UFUNCTION(BlueprintPure, Category = "Combat Text Functions")
+  FVector GetStartLocation();
+
 private:
 
   AActor* CurrentActor;
@@ -73,6 +83,16 @@ private:
   void DestroyText();
 
   UCombatTextWidget* CombatTextWidget;
+
+  bool bAtSocket;
+
+  FVector StartLocation;
+
+  FVector SetStartLocation(class UStaticMeshComponent* Mesh);
+
+  FVector SetStartLocation(class USkeletalMeshComponent* Mesh);
+
+  FVector SetStartLocation();
 
 protected:
 

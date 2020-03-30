@@ -46,7 +46,7 @@ void AFloatingCombatTextManager::Tick(float DeltaTime)
 
 void AFloatingCombatTextManager::TimelineCallback(float val)
 {
-  FVector TargetPostion = FMath::Lerp(GetActorLocation(), EndPoint, val);
+  FVector TargetPostion = FMath::Lerp(StartLocation, EndPoint, val);
 
   SetActorLocation(TargetPostion);
 }
@@ -75,7 +75,47 @@ void AFloatingCombatTextManager::StartTextAnimation()
   TextTimeline.PlayFromStart();
 }
 
-void AFloatingCombatTextManager::ConstructText(FText TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, FName Socket, float PlayRate)
+void AFloatingCombatTextManager::ConstructTextWithSocketOnStaticMesh(FText TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, FName Socket, UStaticMeshComponent* Mesh, float PlayRate)
+{ 
+  UpTime = TextUpTime;
+
+  EndPoint = CreateRandomVectorInRange(VectorRange.MaxX, VectorRange.MinX, VectorRange.MaxY, VectorRange.MinY, VectorRange.MaxZ, VectorRange.MinZ);
+
+  TextToDisplay = TextToSet;
+
+  CurrentActor = TargetActor;
+
+  AttachedSocket = Socket;
+
+  TimelinePlayRate = PlayRate;
+
+  FAttachmentTransformRules rules(EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, true);
+
+  this->AttachToActor(CurrentActor, rules, AttachedSocket);
+
+  StartLocation = SetStartLocation(Mesh);
+
+  CombatTextWidget = GetCurrentWidgetObject();
+
+  if (CombatTextWidget)
+  {
+    CombatTextWidget->SetCombatText(TextToDisplay);
+  }
+  else
+  {
+    GEngine->AddOnScreenDebugMessage(
+      -1, 
+      0.35f,   
+      FColor::Red.WithAlpha(64),
+      FString::Printf(TEXT("Failed to create CombatText was unable to get combat text widget"))
+    );
+    return;
+  }
+  SetUpTime(UpTime);
+  StartTextAnimation();
+}
+
+void AFloatingCombatTextManager::ConstructTextWithSocketOnSkeletalMesh(FText TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, FName Socket, class USkeletalMeshComponent* Mesh, float PlayRate)
 {
   UpTime = TextUpTime;
 
@@ -93,6 +133,8 @@ void AFloatingCombatTextManager::ConstructText(FText TextToSet, float TextUpTime
 
   this->AttachToActor(CurrentActor, rules, AttachedSocket);
 
+  StartLocation = SetStartLocation(Mesh);
+
   CombatTextWidget = GetCurrentWidgetObject();
 
   if (CombatTextWidget)
@@ -102,8 +144,46 @@ void AFloatingCombatTextManager::ConstructText(FText TextToSet, float TextUpTime
   else
   {
     GEngine->AddOnScreenDebugMessage(
-      -1, 
-      0.35f,   
+      -1,
+      0.35f,
+      FColor::Red.WithAlpha(64),
+      FString::Printf(TEXT("Failed to create CombatText was unable to get combat text widget"))
+    );
+    return;
+  }
+  SetUpTime(UpTime);
+  StartTextAnimation();
+}
+
+void AFloatingCombatTextManager::ConstructTextWithOutSocket(FText TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, float PlayRate)
+{
+  UpTime = TextUpTime;
+
+  EndPoint = CreateRandomVectorInRange(VectorRange.MaxX, VectorRange.MinX, VectorRange.MaxY, VectorRange.MinY, VectorRange.MaxZ, VectorRange.MinZ);
+
+  TextToDisplay = TextToSet;
+
+  CurrentActor = TargetActor;
+
+  TimelinePlayRate = PlayRate;
+
+  FAttachmentTransformRules rules(EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, true);
+
+  this->AttachToActor(CurrentActor, rules);
+
+  StartLocation = SetStartLocation();
+
+  CombatTextWidget = GetCurrentWidgetObject();
+
+  if (CombatTextWidget)
+  {
+    CombatTextWidget->SetCombatText(TextToDisplay);
+  }
+  else
+  {
+    GEngine->AddOnScreenDebugMessage(
+      -1,
+      0.35f,
       FColor::Red.WithAlpha(64),
       FString::Printf(TEXT("Failed to create CombatText was unable to get combat text widget"))
     );
@@ -130,6 +210,11 @@ AActor* AFloatingCombatTextManager::GetCurrentActor()
 float AFloatingCombatTextManager::GetTextUpTime()
 {
   return UpTime;
+}
+
+FVector AFloatingCombatTextManager::GetStartLocation()
+{
+  return StartLocation;
 }
 
 const FName AFloatingCombatTextManager::GetAttachedSocket()
@@ -162,6 +247,72 @@ void AFloatingCombatTextManager::DestroyText()
 {
   FDetachmentTransformRules Rule(EDetachmentRule::KeepRelative, EDetachmentRule::KeepRelative, EDetachmentRule::KeepRelative, false);
   DetachFromActor(Rule);
-
   Destroy();
+}
+
+FVector AFloatingCombatTextManager::SetStartLocation(UStaticMeshComponent* Mesh)
+{
+  if (CurrentActor)
+  {
+    if (Mesh)
+    {
+      return Mesh->GetSocketLocation(AttachedSocket);
+    }
+    else
+    {
+      GEngine->AddOnScreenDebugMessage(
+        -1,
+        0.35f,
+        FColor::Red.WithAlpha(64),
+        FString::Printf(TEXT("Failed to SetStartLocation Mesh is not valid reverting to GetActorLocation"))
+      );
+      return GetActorLocation();
+    }
+  }
+  else
+  {
+    GEngine->AddOnScreenDebugMessage(
+      -1,
+      0.35f,
+      FColor::Red.WithAlpha(64),
+      FString::Printf(TEXT("Failed to SetStartLocation CurrentActor is not valid"))
+    );
+    return FVector(0);
+  }
+}
+
+FVector AFloatingCombatTextManager::SetStartLocation()
+{
+  return GetActorLocation();
+}
+
+FVector AFloatingCombatTextManager::SetStartLocation(class USkeletalMeshComponent* Mesh)
+{
+  if (CurrentActor)
+  {
+    if (Mesh)
+    {
+      return Mesh->GetSocketLocation(AttachedSocket);
+    }
+    else
+    {
+      GEngine->AddOnScreenDebugMessage(
+        -1,
+        0.35f,
+        FColor::Red.WithAlpha(64),
+        FString::Printf(TEXT("Failed to SetStartLocation Mesh is not valid reverting to GetActorLocation"))
+      );
+      return GetActorLocation();
+    }
+  }
+  else
+  {
+    GEngine->AddOnScreenDebugMessage(
+      -1,
+      0.35f,
+      FColor::Red.WithAlpha(64),
+      FString::Printf(TEXT("Failed to SetStartLocation CurrentActor is not valid"))
+    );
+    return FVector(0);
+  }
 }

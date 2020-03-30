@@ -23,16 +23,19 @@ public:
   /* This how long the text will be up for */
   UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Text Settings")
   float TextUpTime;
-  /* Socket to spawn text from */
-  UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Text Settings")
-  FName TextSocket;
   /* When text is spawn it will move to a random location this where can set the range of the random vector */
   UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Text Settings")
   FRandomVectorInfo RandomVectorRange;
   /* The play rate of the lerp timeline */
   UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Text Settings")
   float LerpPlayRate;
-  /* The function used to spawn floating combat text */
+  /* The function will spawn combat text on the given socket on a static mesh */
   UFUNCTION(BlueprintCallable, Category = "Combat Text Functions")
-  AFloatingCombatTextManager* SpawnText(FText Text);
+  AFloatingCombatTextManager* SpawnTextAtSocketOnStaticMesh(FText Text, FName SocketName, class UStaticMeshComponent* Mesh);
+  /* The function will spawn combat text on the given socket on a skeletal mesh */
+  UFUNCTION(BlueprintCallable, Category = "Combat Text Functions")
+  AFloatingCombatTextManager* SpawnTextAtSocketOnSkeletalMesh(FText Text, FName SocketName, class USkeletalMeshComponent* Mesh);
+  /* The function will spawn combat text from the actors root location */
+  UFUNCTION(BlueprintCallable, Category = "Combat Text Functions")
+  AFloatingCombatTextManager* SpawnTextOnActor(FText Text);
 };

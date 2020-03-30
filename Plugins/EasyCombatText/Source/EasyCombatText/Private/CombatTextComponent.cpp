@@ -20,20 +20,42 @@ UCombatTextComponent::UCombatTextComponent()
   RandomVectorRange.MinX = -500.0f;
   RandomVectorRange.MaxX = 1000.0f;
 
-  RandomVectorRange.MinY = -100.0;
+  RandomVectorRange.MinY = -500.0f;
   RandomVectorRange.MaxY = 1000.0f;
 
   RandomVectorRange.MinZ = -500.0f;
   RandomVectorRange.MaxZ = 1000.0f;
 }
 
-AFloatingCombatTextManager* UCombatTextComponent::SpawnText(FText Text)
+AFloatingCombatTextManager* UCombatTextComponent::SpawnTextAtSocketOnStaticMesh(FText Text, FName SocketName, UStaticMeshComponent* Mesh)
 {
   AFloatingCombatTextManager* FloatingText = GetWorld()->SpawnActor<AFloatingCombatTextManager>(TextManager);
 
   if (!ensure(FloatingText != nullptr)) { return nullptr; }
 
-  FloatingText->ConstructText(Text, TextUpTime, RandomVectorRange, GetOwner(), TextSocket, LerpPlayRate);
+  FloatingText->ConstructTextWithSocketOnStaticMesh(Text, TextUpTime, RandomVectorRange, GetOwner(), SocketName, Mesh, LerpPlayRate);
+
+  return FloatingText;
+}
+
+AFloatingCombatTextManager* UCombatTextComponent::SpawnTextAtSocketOnSkeletalMesh(FText Text, FName SocketName, USkeletalMeshComponent* Mesh)
+{
+  AFloatingCombatTextManager* FloatingText = GetWorld()->SpawnActor<AFloatingCombatTextManager>(TextManager);
+
+  if (!ensure(FloatingText != nullptr)) { return nullptr; }
+
+  FloatingText->ConstructTextWithSocketOnSkeletalMesh(Text, TextUpTime, RandomVectorRange, GetOwner(), SocketName, Mesh, LerpPlayRate);
+
+  return FloatingText;
+}
+
+AFloatingCombatTextManager* UCombatTextComponent::SpawnTextOnActor(FText Text)
+{
+  AFloatingCombatTextManager* FloatingText = GetWorld()->SpawnActor<AFloatingCombatTextManager>(TextManager);
+
+  if (!ensure(FloatingText != nullptr)) { return nullptr; }
+
+  FloatingText->ConstructTextWithOutSocket(Text, TextUpTime, RandomVectorRange, GetOwner(), LerpPlayRate);
 
   return FloatingText;
 }
