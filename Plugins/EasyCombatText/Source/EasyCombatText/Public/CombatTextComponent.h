@@ -23,7 +23,7 @@ public:
   /* This how long the text will be up for */
   UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Text Settings")
   float TextUpTime;
-  /* When text is spawn it will move to a random location this where can set the range of the random vector */
+  /* When text is spawn it will move to a random end location this where can set the range of the random vector */
   UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Text Settings")
   FRandomVectorInfo RandomVectorRange;
   /* The play rate of the lerp timeline */
@@ -38,4 +38,7 @@ public:
   /* The function will spawn combat text from the actors root location */
   UFUNCTION(BlueprintCallable, Category = "Combat Text Functions")
   AFloatingCombatTextManager* SpawnTextOnActor(FText Text);
+  /* This function will spawn text at the given hit location */
+  UFUNCTION(BlueprintCallable, Category = "Combat Text Functions")
+  AFloatingCombatTextManager* SpawnTextAtHitLocation(FText Text, FVector HitLocation);
 };

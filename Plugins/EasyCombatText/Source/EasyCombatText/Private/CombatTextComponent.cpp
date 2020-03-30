@@ -59,3 +59,14 @@ AFloatingCombatTextManager* UCombatTextComponent::SpawnTextOnActor(FText Text)
 
   return FloatingText;
 }
+
+AFloatingCombatTextManager* UCombatTextComponent::SpawnTextAtHitLocation(FText Text, FVector HitLocation)
+{
+  AFloatingCombatTextManager* FloatingText = GetWorld()->SpawnActor<AFloatingCombatTextManager>(TextManager);
+
+  if (!ensure(FloatingText != nullptr)) { return nullptr; }
+
+  FloatingText->ConstructTextWithSetStart(Text, TextUpTime, RandomVectorRange, GetOwner(), LerpPlayRate, HitLocation);
+
+  return FloatingText;
+}

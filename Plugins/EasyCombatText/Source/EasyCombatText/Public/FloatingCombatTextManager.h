@@ -35,6 +35,9 @@ public:
   /* Set the text to display and it's up time */
   UFUNCTION(BlueprintCallable, Category = "Combat Text Functions")
   void ConstructTextWithOutSocket(FText TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, float PlayRate);
+  /* Set the text to display and it's up time */
+  UFUNCTION(BlueprintCallable, Category = "Combat Text Functions")
+  void ConstructTextWithSetStart(FText TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, float PlayRate, FVector HitLocation);
   /* Will start moving text to end point */
   UFUNCTION(BlueprintCallable, Category = "Combat Text Functions")
   void StartTextAnimation();
@@ -83,8 +86,6 @@ private:
   void DestroyText();
 
   UCombatTextWidget* CombatTextWidget;
-
-  bool bAtSocket;
 
   FVector StartLocation;
 

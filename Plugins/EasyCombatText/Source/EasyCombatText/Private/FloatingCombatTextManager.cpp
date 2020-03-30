@@ -193,6 +193,44 @@ void AFloatingCombatTextManager::ConstructTextWithOutSocket(FText TextToSet, flo
   StartTextAnimation();
 }
 
+void AFloatingCombatTextManager::ConstructTextWithSetStart(FText TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, float PlayRate, FVector HitLocation)
+{
+  UpTime = TextUpTime;
+
+  EndPoint = CreateRandomVectorInRange(VectorRange.MaxX, VectorRange.MinX, VectorRange.MaxY, VectorRange.MinY, VectorRange.MaxZ, VectorRange.MinZ);
+
+  TextToDisplay = TextToSet;
+
+  CurrentActor = TargetActor;
+
+  TimelinePlayRate = PlayRate;
+
+  FAttachmentTransformRules rules(EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, true);
+
+  this->AttachToActor(CurrentActor, rules);
+
+  StartLocation = HitLocation;
+
+  CombatTextWidget = GetCurrentWidgetObject();
+
+  if (CombatTextWidget)
+  {
+    CombatTextWidget->SetCombatText(TextToDisplay);
+  }
+  else
+  {
+    GEngine->AddOnScreenDebugMessage(
+      -1,
+      0.35f,
+      FColor::Red.WithAlpha(64),
+      FString::Printf(TEXT("Failed to create CombatText was unable to get combat text widget"))
+    );
+    return;
+  }
+  SetUpTime(UpTime);
+  StartTextAnimation();
+}
+
 FVector AFloatingCombatTextManager::CreateRandomVectorInRange(float MaxX, float MinX, float MaxY, float MinY, float MaxZ, float MinZ)
 {
   float VectorX = FMath::RandRange(MinX, MaxX);
