@@ -20,7 +20,7 @@ UCombatTextComponent::UCombatTextComponent()
   RandomVectorRange.MinX = -500.0f;
   RandomVectorRange.MaxX = 1000.0f;
 
-  RandomVectorRange.MinY = 500.0f;
+  RandomVectorRange.MinY = -100.0;
   RandomVectorRange.MaxY = 1000.0f;
 
   RandomVectorRange.MinZ = -500.0f;

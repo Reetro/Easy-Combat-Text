@@ -4,6 +4,8 @@
 #include "FloatingCombatTextManager.h"
 #include "Curves/CurveFloat.h"
 #include "Components/SceneComponent.h"
+#include "TimerManager.h"
+#include "Animation/WidgetAnimation.h"
 #include "Components/WidgetComponent.h"
 #include "CombatTextWidget.h"
 #include "Engine.h"
@@ -51,7 +53,14 @@ void AFloatingCombatTextManager::TimelineCallback(float val)
 
 void AFloatingCombatTextManager::OnAnimationEnd_Implementation()
 {
-  
+  if (CombatTextWidget)
+  {
+    CombatTextWidget->PlayAnimation(CombatTextWidget->FadeAnimation);
+
+    FTimerHandle Handel;
+
+    GetWorldTimerManager().SetTimer(Handel, this, &AFloatingCombatTextManager::DestroyText, CombatTextWidget->FadeAnimation->GetEndTime(), false);
+  }
 }
 
 void AFloatingCombatTextManager::StartTextAnimation()
@@ -68,7 +77,7 @@ void AFloatingCombatTextManager::StartTextAnimation()
 
 void AFloatingCombatTextManager::ConstructText(FText TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, FName Socket, float PlayRate)
 {
-  TextUpTime = UpTime;
+  UpTime = TextUpTime;
 
   EndPoint = CreateRandomVectorInRange(VectorRange.MaxX, VectorRange.MinX, VectorRange.MaxY, VectorRange.MinY, VectorRange.MaxZ, VectorRange.MinZ);
 
@@ -84,11 +93,11 @@ void AFloatingCombatTextManager::ConstructText(FText TextToSet, float TextUpTime
 
   this->AttachToActor(CurrentActor, rules, AttachedSocket);
 
-  UCombatTextWidget* LocalWidget = GetCurrentWidgetObject();
+  CombatTextWidget = GetCurrentWidgetObject();
 
-  if (LocalWidget)
+  if (CombatTextWidget)
   {
-    LocalWidget->SetCombatText(TextToDisplay);
+    CombatTextWidget->SetCombatText(TextToDisplay);
   }
   else
   {
@@ -100,7 +109,7 @@ void AFloatingCombatTextManager::ConstructText(FText TextToSet, float TextUpTime
     );
     return;
   }
-
+  SetUpTime(UpTime);
   StartTextAnimation();
 }
 
@@ -140,4 +149,19 @@ UCombatTextWidget* AFloatingCombatTextManager::GetCurrentWidgetObject()
   {
     return nullptr;
   }
+}
+
+void AFloatingCombatTextManager::SetUpTime(float Delay)
+{
+  FTimerHandle Handel;
+
+  GetWorldTimerManager().SetTimer(Handel, this, &AFloatingCombatTextManager::OnAnimationEnd, Delay, false);
+}
+
+void AFloatingCombatTextManager::DestroyText()
+{
+  FDetachmentTransformRules Rule(EDetachmentRule::KeepRelative, EDetachmentRule::KeepRelative, EDetachmentRule::KeepRelative, false);
+  DetachFromActor(Rule);
+
+  Destroy();
 }

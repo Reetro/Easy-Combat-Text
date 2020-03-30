@@ -22,6 +22,7 @@ public:
   UFUNCTION(BlueprintCallable, Category = "Combat Text Functions")
   void SetCombatText(FText Text);
 
-
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
+  class UWidgetAnimation* FadeAnimation;
 
 };

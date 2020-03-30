@@ -68,6 +68,12 @@ private:
 
   class UCombatTextWidget* CurrentWidgetObject;
 
+  void SetUpTime(float Delay);
+
+  void DestroyText();
+
+  UCombatTextWidget* CombatTextWidget;
+
 protected:
 
   FTimeline TextTimeline;
