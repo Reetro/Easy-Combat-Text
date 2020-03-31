@@ -51,7 +51,7 @@ void AFloatingCombatTextManager::TimelineCallback(float val)
   SetActorLocation(TargetPostion);
 }
 
-void AFloatingCombatTextManager::OnAnimationEnd_Implementation()
+void AFloatingCombatTextManager::OnAnimationEnd()
 {
   if (CombatTextWidget)
   {
@@ -75,7 +75,7 @@ void AFloatingCombatTextManager::StartTextAnimation()
   TextTimeline.PlayFromStart();
 }
 
-void AFloatingCombatTextManager::ConstructTextWithSocketOnStaticMesh(FText TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, FName Socket, UStaticMeshComponent* Mesh, float PlayRate)
+void AFloatingCombatTextManager::ConstructTextWithSocketOnStaticMesh_Implementation(FText& TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, FName Socket, class UStaticMeshComponent* Mesh, float PlayRate)
 { 
   UpTime = TextUpTime;
 
@@ -115,7 +115,7 @@ void AFloatingCombatTextManager::ConstructTextWithSocketOnStaticMesh(FText TextT
   StartTextAnimation();
 }
 
-void AFloatingCombatTextManager::ConstructTextWithSocketOnSkeletalMesh(FText TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, FName Socket, class USkeletalMeshComponent* Mesh, float PlayRate)
+void AFloatingCombatTextManager::ConstructTextWithSocketOnSkeletalMesh_Implementation(FText& TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, FName Socket, class USkeletalMeshComponent* Mesh, float PlayRate)
 {
   UpTime = TextUpTime;
 
@@ -155,7 +155,7 @@ void AFloatingCombatTextManager::ConstructTextWithSocketOnSkeletalMesh(FText Tex
   StartTextAnimation();
 }
 
-void AFloatingCombatTextManager::ConstructTextWithOutSocket(FText TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, float PlayRate)
+void AFloatingCombatTextManager::ConstructTextWithOutSocket_Implementation(FText& TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, float PlayRate)
 {
   UpTime = TextUpTime;
 
@@ -193,7 +193,7 @@ void AFloatingCombatTextManager::ConstructTextWithOutSocket(FText TextToSet, flo
   StartTextAnimation();
 }
 
-void AFloatingCombatTextManager::ConstructTextWithSetStart(FText TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, float PlayRate, FVector HitLocation)
+void AFloatingCombatTextManager::ConstructTextWithSetStart_Implementation(FText& TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, float PlayRate, FVector HitLocation)
 {
   UpTime = TextUpTime;
 
