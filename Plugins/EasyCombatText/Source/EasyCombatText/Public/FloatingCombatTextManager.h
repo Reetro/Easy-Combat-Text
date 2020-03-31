@@ -26,16 +26,16 @@ public:
   /* Returns the UpTime set on the text */
   UFUNCTION(BlueprintPure, Category = "Combat Text Functions")
   float GetTextUpTime();
-  /* Set the text to display and it's up time */
+  /* Will attach this actor to the given Static Mesh and Socket then starts timeline */
   UFUNCTION(BlueprintCallable, Category = "Combat Text Functions")
   void ConstructTextWithSocketOnStaticMesh(FText TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, FName Socket, class UStaticMeshComponent* Mesh, float PlayRate);
-  /* Set the text to display and it's up time */
+  /* Will attach this actor to the given Skeletal Mesh and Socket then starts timeline */
   UFUNCTION(BlueprintCallable, Category = "Combat Text Functions")
   void ConstructTextWithSocketOnSkeletalMesh(FText TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, FName Socket, class USkeletalMeshComponent* Mesh, float PlayRate);
-  /* Set the text to display and it's up time */
+  /* Will attach this actor to the owner of the Combat Text Component then starts timeline */
   UFUNCTION(BlueprintCallable, Category = "Combat Text Functions")
   void ConstructTextWithOutSocket(FText TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, float PlayRate);
-  /* Set the text to display and it's up time */
+  /* Will attach this actor to the owner of the Combat Text Component then starts timeline text will spawn at the given Hit Location */
   UFUNCTION(BlueprintCallable, Category = "Combat Text Functions")
   void ConstructTextWithSetStart(FText TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, float PlayRate, FVector HitLocation);
   /* Will start moving text to end point */
