@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "SRandomVectorInfo.h"
+#include "Fonts/SlateFontInfo.h"
 #include "Styling/SlateColor.h"
 #include "UObject/TextProperty.h"
 #include "GameFramework/Actor.h"
@@ -30,20 +31,20 @@ public:
   float GetTextUpTime();
   /* Will attach this actor to the given Static Mesh and Socket then starts timeline */
   UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Combat Text Events")
-  void ConstructTextWithSocketOnStaticMesh(FText& TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, FName Socket, class UStaticMeshComponent* Mesh, float PlayRate, FSlateColor Color);
-  virtual void ConstructTextWithSocketOnStaticMesh_Implementation(FText& TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, FName Socket, class UStaticMeshComponent* Mesh, float PlayRate, FSlateColor Color);
+  void ConstructTextWithSocketOnStaticMesh(FText& TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, FName Socket, class UStaticMeshComponent* Mesh, float PlayRate, FSlateColor Color, FSlateFontInfo Font);
+  virtual void ConstructTextWithSocketOnStaticMesh_Implementation(FText& TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, FName Socket, class UStaticMeshComponent* Mesh, float PlayRate, FSlateColor Color, FSlateFontInfo Font);
   /* Will attach this actor to the given Skeletal Mesh and Socket then starts timeline */
   UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Combat Text Events")
-  void ConstructTextWithSocketOnSkeletalMesh(FText& TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, FName Socket, class USkeletalMeshComponent* Mesh, float PlayRate, FSlateColor Color);
-  virtual void ConstructTextWithSocketOnSkeletalMesh_Implementation(FText& TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, FName Socket, class USkeletalMeshComponent* Mesh, float PlayRate, FSlateColor Color);
+  void ConstructTextWithSocketOnSkeletalMesh(FText& TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, FName Socket, class USkeletalMeshComponent* Mesh, float PlayRate, FSlateColor Color, FSlateFontInfo Font);
+  virtual void ConstructTextWithSocketOnSkeletalMesh_Implementation(FText& TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, FName Socket, class USkeletalMeshComponent* Mesh, float PlayRate, FSlateColor Color, FSlateFontInfo Font);
   /* Will attach this actor to the owner of the Combat Text Component then starts timeline */
   UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Combat Text Events")
-  void ConstructTextWithOutSocket(FText& TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, float PlayRate, FSlateColor Color);
-  virtual void ConstructTextWithOutSocket_Implementation(FText& TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, float PlayRate, FSlateColor Color);
+  void ConstructTextWithOutSocket(FText& TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, float PlayRate, FSlateColor Color, FSlateFontInfo Font);
+  virtual void ConstructTextWithOutSocket_Implementation(FText& TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, float PlayRate, FSlateColor Color, FSlateFontInfo Font);
   /* Will attach this actor to the owner of the Combat Text Component then starts timeline text will spawn at the given Hit Location */
   UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Combat Text Events")
-  void ConstructTextWithSetStart(FText& TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, float PlayRate, FVector HitLocation, FSlateColor Color);
-  virtual void ConstructTextWithSetStart_Implementation(FText& TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, float PlayRate, FVector HitLocation, FSlateColor Color);
+  void ConstructTextWithSetStart(FText& TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, float PlayRate, FVector HitLocation, FSlateColor Color, FSlateFontInfo Font);
+  virtual void ConstructTextWithSetStart_Implementation(FText& TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, float PlayRate, FVector HitLocation, FSlateColor Color, FSlateFontInfo Font);
   /* Will start moving text to end point */
   UFUNCTION(BlueprintCallable, Category = "Combat Text Functions")
   void StartTextAnimation();

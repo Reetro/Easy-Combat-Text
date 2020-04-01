@@ -22,8 +22,11 @@ public:
   UPROPERTY(BlueprintReadOnly, Category = "Combat Text Vars")
   FSlateColor TextColor;
 
+  UPROPERTY(BlueprintReadOnly, Category = "Combat Text Vars")
+  FSlateFontInfo FontSettings;
+
   UFUNCTION(BlueprintCallable, Category = "Combat Text Functions")
-  void SetCombatText(FText Text, FSlateColor Color);
+  void SetCombatText(FText Text, FSlateColor Color, FSlateFontInfo Font);
 
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
   class UWidgetAnimation* FadeAnimation;

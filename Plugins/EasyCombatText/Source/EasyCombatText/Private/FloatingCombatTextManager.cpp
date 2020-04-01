@@ -63,44 +63,6 @@ void AFloatingCombatTextManager::OnAnimationEnd()
   }
 }
 
-void AFloatingCombatTextManager::ConstructTextWithSetStart_Implementation(FText& TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, float PlayRate, FVector HitLocation, FSlateColor Color)
-{
-  UpTime = TextUpTime;
-
-  EndPoint = CreateRandomVectorInRange(VectorRange.MaxX, VectorRange.MinX, VectorRange.MaxY, VectorRange.MinY, VectorRange.MaxZ, VectorRange.MinZ);
-
-  TextToDisplay = TextToSet;
-
-  CurrentActor = TargetActor;
-
-  TimelinePlayRate = PlayRate;
-
-  FAttachmentTransformRules rules(EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, true);
-
-  this->AttachToActor(CurrentActor, rules);
-
-  StartLocation = HitLocation;
-
-  CombatTextWidget = GetCurrentWidgetObject();
-
-  if (CombatTextWidget)
-  {
-    CombatTextWidget->SetCombatText(TextToDisplay, Color);
-  }
-  else
-  {
-    GEngine->AddOnScreenDebugMessage(
-      -1,
-      0.35f,
-      FColor::Red.WithAlpha(64),
-      FString::Printf(TEXT("Failed to create CombatText was unable to get combat text widget"))
-    );
-    return;
-  }
-  SetUpTime(UpTime);
-  StartTextAnimation();
-}
-
 void AFloatingCombatTextManager::StartTextAnimation()
 {
   // Setup Timeline
@@ -132,7 +94,7 @@ float AFloatingCombatTextManager::GetTextUpTime()
   return UpTime;
 }
 
-void AFloatingCombatTextManager::ConstructTextWithSocketOnStaticMesh_Implementation(FText& TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, FName Socket, class UStaticMeshComponent* Mesh, float PlayRate, FSlateColor Color)
+void AFloatingCombatTextManager::ConstructTextWithSocketOnStaticMesh_Implementation(FText& TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, FName Socket, class UStaticMeshComponent* Mesh, float PlayRate, FSlateColor Color, FSlateFontInfo Font)
 {
   UpTime = TextUpTime;
 
@@ -156,7 +118,7 @@ void AFloatingCombatTextManager::ConstructTextWithSocketOnStaticMesh_Implementat
 
   if (CombatTextWidget)
   {
-    CombatTextWidget->SetCombatText(TextToDisplay, Color);
+    CombatTextWidget->SetCombatText(TextToDisplay, Color, Font);
   }
   else
   {
@@ -172,7 +134,7 @@ void AFloatingCombatTextManager::ConstructTextWithSocketOnStaticMesh_Implementat
   StartTextAnimation();
 }
 
-void AFloatingCombatTextManager::ConstructTextWithSocketOnSkeletalMesh_Implementation(FText& TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, FName Socket, class USkeletalMeshComponent* Mesh, float PlayRate, FSlateColor Color)
+void AFloatingCombatTextManager::ConstructTextWithSocketOnSkeletalMesh_Implementation(FText& TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, FName Socket, class USkeletalMeshComponent* Mesh, float PlayRate, FSlateColor Color, FSlateFontInfo Font)
 {
   UpTime = TextUpTime;
 
@@ -196,7 +158,7 @@ void AFloatingCombatTextManager::ConstructTextWithSocketOnSkeletalMesh_Implement
 
   if (CombatTextWidget)
   {
-    CombatTextWidget->SetCombatText(TextToDisplay, Color);
+    CombatTextWidget->SetCombatText(TextToDisplay, Color, Font);
   }
   else
   {
@@ -212,7 +174,46 @@ void AFloatingCombatTextManager::ConstructTextWithSocketOnSkeletalMesh_Implement
   StartTextAnimation();
 }
 
-void AFloatingCombatTextManager::ConstructTextWithOutSocket_Implementation(FText& TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, float PlayRate, FSlateColor Color)
+void AFloatingCombatTextManager::ConstructTextWithSetStart_Implementation(FText& TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, float PlayRate, FVector HitLocation, FSlateColor Color, FSlateFontInfo Font)
+{
+  UpTime = TextUpTime;
+
+  EndPoint = CreateRandomVectorInRange(VectorRange.MaxX, VectorRange.MinX, VectorRange.MaxY, VectorRange.MinY, VectorRange.MaxZ, VectorRange.MinZ);
+
+  TextToDisplay = TextToSet;
+
+  CurrentActor = TargetActor;
+
+  TimelinePlayRate = PlayRate;
+
+  FAttachmentTransformRules rules(EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, true);
+
+  this->AttachToActor(CurrentActor, rules);
+
+  StartLocation = HitLocation;
+
+  CombatTextWidget = GetCurrentWidgetObject();
+
+  if (CombatTextWidget)
+  {
+    CombatTextWidget->SetCombatText(TextToDisplay, Color, Font);
+  }
+  else
+  {
+    GEngine->AddOnScreenDebugMessage(
+      -1,
+      0.35f,
+      FColor::Red.WithAlpha(64),
+      FString::Printf(TEXT("Failed to create CombatText was unable to get combat text widget"))
+    );
+    return;
+  }
+  SetUpTime(UpTime);
+  StartTextAnimation();
+}
+
+
+void AFloatingCombatTextManager::ConstructTextWithOutSocket_Implementation(FText& TextToSet, float TextUpTime, FRandomVectorInfo VectorRange, AActor* TargetActor, float PlayRate, FSlateColor Color, FSlateFontInfo Font)
 {
   UpTime = TextUpTime;
 
@@ -234,7 +235,7 @@ void AFloatingCombatTextManager::ConstructTextWithOutSocket_Implementation(FText
 
   if (CombatTextWidget)
   {
-    CombatTextWidget->SetCombatText(TextToDisplay, Color);
+    CombatTextWidget->SetCombatText(TextToDisplay, Color, Font);
   }
   else
   {

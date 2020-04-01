@@ -6,6 +6,7 @@
 #include "SRandomVectorInfo.h"
 #include "UObject/TextProperty.h"
 #include "Styling/SlateColor.h"
+#include "Fonts/SlateFontInfo.h"
 #include "Components/ActorComponent.h"
 #include "CombatTextComponent.generated.h"
 
@@ -29,11 +30,14 @@ public:
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Text Settings")
   FRandomVectorInfo RandomVectorRange;
   /* The play rate of the lerp timeline */
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Text Settings")
+  UPROPERTY(BlueprintReadOnly, Category = "Text Settings")
   float LerpPlayRate;
   /* Color of the combat text */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Text Settings")
   FSlateColor TextColor;
+  /* Can set font size and the font family */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Text Settings")
+  FSlateFontInfo FontSettings;
   /* The function will spawn combat text on the given socket on a static mesh */
   UFUNCTION(BlueprintCallable, Category = "Combat Text Functions")
   AFloatingCombatTextManager* SpawnTextAtSocketOnStaticMesh(FText Text, FName SocketName, class UStaticMeshComponent* Mesh);

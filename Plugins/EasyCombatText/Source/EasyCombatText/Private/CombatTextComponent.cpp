@@ -3,6 +3,8 @@
 
 #include "CombatTextComponent.h"
 #include "Engine/World.h"
+#include "Engine/Font.h"
+#include "UObject/ConstructorHelpers.h"
 #include "FloatingCombatTextManager.h"
 #include "Math/UnrealMathUtility.h"
 
@@ -26,6 +28,12 @@ UCombatTextComponent::UCombatTextComponent()
 
   RandomVectorRange.MinZ = -500.0f;
   RandomVectorRange.MaxZ = 18138.527344f;
+
+  ConstructorHelpers::FObjectFinder<UFont> TextFont(TEXT("/EasyCombatText/Fonts/RobotoSlabRegular-w1GE3_Font"));
+  check(TextFont.Succeeded());
+
+  FontSettings.FontObject = TextFont.Object;
+  FontSettings.Size = 12.0f;
 }
 
 AFloatingCombatTextManager* UCombatTextComponent::SpawnTextAtSocketOnStaticMesh(FText Text, FName SocketName, UStaticMeshComponent* Mesh)
@@ -34,7 +42,7 @@ AFloatingCombatTextManager* UCombatTextComponent::SpawnTextAtSocketOnStaticMesh(
 
   if (!ensure(FloatingText != nullptr)) { return nullptr; }
 
-  FloatingText->ConstructTextWithSocketOnStaticMesh(Text, TextUpTime, RandomVectorRange, GetOwner(), SocketName, Mesh, LerpPlayRate, TextColor);
+  FloatingText->ConstructTextWithSocketOnStaticMesh(Text, TextUpTime, RandomVectorRange, GetOwner(), SocketName, Mesh, LerpPlayRate, TextColor, FontSettings);
 
   return FloatingText;
 }
@@ -45,7 +53,7 @@ AFloatingCombatTextManager* UCombatTextComponent::SpawnTextAtSocketOnSkeletalMes
 
   if (!ensure(FloatingText != nullptr)) { return nullptr; }
 
-  FloatingText->ConstructTextWithSocketOnSkeletalMesh(Text, TextUpTime, RandomVectorRange, GetOwner(), SocketName, Mesh, LerpPlayRate, TextColor);
+  FloatingText->ConstructTextWithSocketOnSkeletalMesh(Text, TextUpTime, RandomVectorRange, GetOwner(), SocketName, Mesh, LerpPlayRate, TextColor, FontSettings);
 
   return FloatingText;
 }
@@ -56,7 +64,7 @@ AFloatingCombatTextManager* UCombatTextComponent::SpawnTextOnActor(FText Text)
 
   if (!ensure(FloatingText != nullptr)) { return nullptr; }
 
-  FloatingText->ConstructTextWithOutSocket(Text, TextUpTime, RandomVectorRange, GetOwner(), LerpPlayRate, TextColor);
+  FloatingText->ConstructTextWithOutSocket(Text, TextUpTime, RandomVectorRange, GetOwner(), LerpPlayRate, TextColor, FontSettings);
 
   return FloatingText;
 }
@@ -67,7 +75,7 @@ AFloatingCombatTextManager* UCombatTextComponent::SpawnTextAtHitLocation(FText T
 
   if (!ensure(FloatingText != nullptr)) { return nullptr; }
 
-  FloatingText->ConstructTextWithSetStart(Text, TextUpTime, RandomVectorRange, GetOwner(), LerpPlayRate, HitLocation, TextColor);
+  FloatingText->ConstructTextWithSetStart(Text, TextUpTime, RandomVectorRange, GetOwner(), LerpPlayRate, HitLocation, TextColor, FontSettings);
 
   return FloatingText;
 }

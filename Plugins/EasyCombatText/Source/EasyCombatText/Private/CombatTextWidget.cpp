@@ -3,8 +3,9 @@
 
 #include "CombatTextWidget.h"
 
-void UCombatTextWidget::SetCombatText(FText Text, FSlateColor Color)
+void UCombatTextWidget::SetCombatText(FText Text, FSlateColor Color, FSlateFontInfo Font)
 {
   CombatText = Text;
   TextColor = Color;
+  FontSettings = Font;
 }
