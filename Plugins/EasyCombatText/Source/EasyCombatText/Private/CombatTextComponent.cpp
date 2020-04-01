@@ -16,6 +16,7 @@ UCombatTextComponent::UCombatTextComponent()
   TextManager = AFloatingCombatTextManager::StaticClass();
   TextUpTime = 1.0f;
   LerpPlayRate = 0.02f;
+  TextColor = FLinearColor(1,0,0,1);
   
   RandomVectorRange.MinX = -500.0f;
   RandomVectorRange.MaxX = 18138.527344f;
@@ -33,7 +34,7 @@ AFloatingCombatTextManager* UCombatTextComponent::SpawnTextAtSocketOnStaticMesh(
 
   if (!ensure(FloatingText != nullptr)) { return nullptr; }
 
-  FloatingText->ConstructTextWithSocketOnStaticMesh(Text, TextUpTime, RandomVectorRange, GetOwner(), SocketName, Mesh, LerpPlayRate);
+  FloatingText->ConstructTextWithSocketOnStaticMesh(Text, TextUpTime, RandomVectorRange, GetOwner(), SocketName, Mesh, LerpPlayRate, TextColor);
 
   return FloatingText;
 }
@@ -44,7 +45,7 @@ AFloatingCombatTextManager* UCombatTextComponent::SpawnTextAtSocketOnSkeletalMes
 
   if (!ensure(FloatingText != nullptr)) { return nullptr; }
 
-  FloatingText->ConstructTextWithSocketOnSkeletalMesh(Text, TextUpTime, RandomVectorRange, GetOwner(), SocketName, Mesh, LerpPlayRate);
+  FloatingText->ConstructTextWithSocketOnSkeletalMesh(Text, TextUpTime, RandomVectorRange, GetOwner(), SocketName, Mesh, LerpPlayRate, TextColor);
 
   return FloatingText;
 }
@@ -55,7 +56,7 @@ AFloatingCombatTextManager* UCombatTextComponent::SpawnTextOnActor(FText Text)
 
   if (!ensure(FloatingText != nullptr)) { return nullptr; }
 
-  FloatingText->ConstructTextWithOutSocket(Text, TextUpTime, RandomVectorRange, GetOwner(), LerpPlayRate);
+  FloatingText->ConstructTextWithOutSocket(Text, TextUpTime, RandomVectorRange, GetOwner(), LerpPlayRate, TextColor);
 
   return FloatingText;
 }
@@ -66,7 +67,7 @@ AFloatingCombatTextManager* UCombatTextComponent::SpawnTextAtHitLocation(FText T
 
   if (!ensure(FloatingText != nullptr)) { return nullptr; }
 
-  FloatingText->ConstructTextWithSetStart(Text, TextUpTime, RandomVectorRange, GetOwner(), LerpPlayRate, HitLocation);
+  FloatingText->ConstructTextWithSetStart(Text, TextUpTime, RandomVectorRange, GetOwner(), LerpPlayRate, HitLocation, TextColor);
 
   return FloatingText;
 }

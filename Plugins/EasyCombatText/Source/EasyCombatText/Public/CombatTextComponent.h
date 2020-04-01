@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "SRandomVectorInfo.h"
 #include "UObject/TextProperty.h"
+#include "Styling/SlateColor.h"
 #include "Components/ActorComponent.h"
 #include "CombatTextComponent.generated.h"
 
@@ -30,6 +31,9 @@ public:
   /* The play rate of the lerp timeline */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Text Settings")
   float LerpPlayRate;
+  /* Color of the combat text */
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Text Settings")
+  FSlateColor TextColor;
   /* The function will spawn combat text on the given socket on a static mesh */
   UFUNCTION(BlueprintCallable, Category = "Combat Text Functions")
   AFloatingCombatTextManager* SpawnTextAtSocketOnStaticMesh(FText Text, FName SocketName, class UStaticMeshComponent* Mesh);
