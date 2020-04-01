@@ -38,16 +38,23 @@ public:
   /* Can set font size and the font family */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Text Settings")
   FSlateFontInfo FontSettings;
-  /* The function will spawn combat text on the given socket on a static mesh */
+  /* The function will spawn combat text on the given socket on a static mesh 
+     Returns the spawned text */
   UFUNCTION(BlueprintCallable, Category = "Combat Text Functions")
   AFloatingCombatTextManager* SpawnTextAtSocketOnStaticMesh(FText Text, FName SocketName, class UStaticMeshComponent* Mesh);
-  /* The function will spawn combat text on the given socket on a skeletal mesh */
+  /* The function will spawn combat text on the given socket on a skeletal mesh 
+    Returns the spawned text 
+  */
   UFUNCTION(BlueprintCallable, Category = "Combat Text Functions")
   AFloatingCombatTextManager* SpawnTextAtSocketOnSkeletalMesh(FText Text, FName SocketName, class USkeletalMeshComponent* Mesh);
-  /* The function will spawn combat text from the actors root location */
+  /* The function will spawn combat text from the actors root location 
+    Returns the spawned text
+  */
   UFUNCTION(BlueprintCallable, Category = "Combat Text Functions")
   AFloatingCombatTextManager* SpawnTextOnActor(FText Text);
-  /* This function will spawn text at the given hit location */
+  /* This function will spawn text at the given hit location 
+    Returns the spawned text
+  */
   UFUNCTION(BlueprintCallable, Category = "Combat Text Functions")
   AFloatingCombatTextManager* SpawnTextAtHitLocation(FText Text, FVector HitLocation);
 };

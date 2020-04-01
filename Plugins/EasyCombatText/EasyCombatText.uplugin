@@ -3,7 +3,7 @@
 	"Version": 1,
 	"VersionName": "1.0",
 	"FriendlyName": "EasyCombatText",
-	"Description": "Creates an easy manage combat text system",
+	"Description": "Adds a text component that will spawn custom floating text",
 	"Category": "Other",
 	"CreatedBy": "Reetro_69",
 	"CreatedByURL": "",
@@ -19,8 +19,7 @@
 			"Name": "EasyCombatText",
 			"Type": "Runtime",
 			"LoadingPhase": "Default",
-	        "WhitelistPlatforms" :
-			[
+			"WhitelistPlatforms": [
 				"Win64",
 				"Win32"
 			]
