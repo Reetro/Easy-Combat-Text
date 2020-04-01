@@ -14,17 +14,17 @@ UCombatTextComponent::UCombatTextComponent()
 	PrimaryComponentTick.bCanEverTick = false;
 
   TextManager = AFloatingCombatTextManager::StaticClass();
-  TextUpTime = 0.2f;
+  TextUpTime = 1.0f;
   LerpPlayRate = 0.02f;
   
   RandomVectorRange.MinX = -500.0f;
-  RandomVectorRange.MaxX = 1000.0f;
+  RandomVectorRange.MaxX = 18138.527344f;
 
   RandomVectorRange.MinY = -500.0f;
-  RandomVectorRange.MaxY = 1000.0f;
+  RandomVectorRange.MaxY = 18138.527344f;
 
   RandomVectorRange.MinZ = -500.0f;
-  RandomVectorRange.MaxZ = 1000.0f;
+  RandomVectorRange.MaxZ = 18138.527344f;
 }
 
 AFloatingCombatTextManager* UCombatTextComponent::SpawnTextAtSocketOnStaticMesh(FText Text, FName SocketName, UStaticMeshComponent* Mesh)
