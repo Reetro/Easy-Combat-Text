@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "SRandomVectorInfo.h"
+#include "UObject/TextProperty.h"
 #include "GameFramework/Actor.h"
 #include "Components/TimelineComponent.h"
 #include "FloatingCombatTextManager.generated.h"
