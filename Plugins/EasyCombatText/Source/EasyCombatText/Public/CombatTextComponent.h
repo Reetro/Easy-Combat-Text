@@ -26,7 +26,7 @@ public:
   /* This is how long the text will be up for once this delay is over text will fade out and be destroyed */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Text Settings")
   float TextUpTime;
-  /* When text is spawn it will move to a random end location this where you can set the range of the random vector */
+  /* When text is spawn it will move to a random end location this is where you can set the range of the random vector */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Text Settings")
   FRandomVectorInfo RandomVectorRange;
   /* The play rate of the lerp timeline */
@@ -38,22 +38,22 @@ public:
   /* Can set font size and the font family */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Text Settings")
   FSlateFontInfo FontSettings;
-  /* The function will spawn combat text on the given socket on a static mesh 
+  /* This function will spawn combat text on the given socket on a static mesh 
      Returns the spawned text */
   UFUNCTION(BlueprintCallable, Category = "Combat Text Functions")
   AFloatingCombatTextManager* SpawnTextAtSocketOnStaticMesh(FText Text, FName SocketName, class UStaticMeshComponent* Mesh);
-  /* The function will spawn combat text on the given socket on a skeletal mesh 
-    Returns the spawned text 
+  /* this function will spawn combat text on the given socket on a skeletal mesh 
+     Returns the spawned text 
   */
   UFUNCTION(BlueprintCallable, Category = "Combat Text Functions")
   AFloatingCombatTextManager* SpawnTextAtSocketOnSkeletalMesh(FText Text, FName SocketName, class USkeletalMeshComponent* Mesh);
-  /* The function will spawn combat text from the actors root location 
-    Returns the spawned text
+  /* This function will spawn combat text from the actors root location 
+     Returns the spawned text
   */
   UFUNCTION(BlueprintCallable, Category = "Combat Text Functions")
   AFloatingCombatTextManager* SpawnTextOnActor(FText Text);
   /* This function will spawn text at the given hit location 
-    Returns the spawned text
+     Returns the spawned text
   */
   UFUNCTION(BlueprintCallable, Category = "Combat Text Functions")
   AFloatingCombatTextManager* SpawnTextAtHitLocation(FText Text, FVector HitLocation);
